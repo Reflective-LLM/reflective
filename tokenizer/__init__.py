@@ -5,7 +5,7 @@ Main file of the tokenizer
 # Holds every known token type
 class TokenHolder:
     def __init__(self):
-        self.tokens: list[str] = []
+        self.tokens: dict(str, int) = {}
 
 class Token:
     def __init__(self, t: int, word: str):
@@ -18,13 +18,25 @@ def tokenize(holder: TokenHolder, text: str) -> list[Token]:
 
     for word in splits:
         buff: str = ""
+        pos: int = 0
 
-        for c in word:
-            buff += c
-            
-            if len(buff) >= 2:
-                if buff in holder.tokens: 
-                    tokens.append(Token(holder.tokens[buff], buff))
-                    buff = ""
-    
+        while pos < len(word):
+            found = False
+            for entry in holder.tokens:
+                if word[pos:] == entry and len(word[pos:]) > len(buff):
+                    buff = word[pos:]
+                    pos += 1
+                    found = True
+                    break
+
+            if not found:
+                pos += 1
+        
+        
+        if not buff == "":
+            tokens.append(Token(holder.tokens[buff], buff))
+            print(f"Token detected: id: {str(holder.tokens[buff])} with raw {buff}")
+
     return tokens
+
+from .reader import readTokenFile
