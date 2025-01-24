@@ -2,15 +2,7 @@
 Main file of the tokenizer
 """
 
-# Holds every known token type
-class TokenHolder:
-    def __init__(self):
-        self.tokens: dict(str, int) = {}
-
-class Token:
-    def __init__(self, t: int, word: str):
-        self.type = t
-        self.word = word
+from .tokens import TokenHolder, Token
 
 def tokenize(holder: TokenHolder, text: str) -> list[Token]:
     tokens: list[Token] = []
