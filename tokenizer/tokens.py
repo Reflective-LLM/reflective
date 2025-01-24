@@ -5,9 +5,9 @@ class Token:
 
 class TokenHolder:
     def __init__(self):
-        self.tokens: dict(str, int) = {}
+        self.tokens: dict[str, int] = {}
     
-    def tokenize(text: str) -> list[Token]:
+    def tokenize(self, text: str) -> list[Token]:
         tokens: list[Token] = []
         splits: list[str] = text.split(" ")
         for word in splits:
